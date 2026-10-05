@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mercer County Park Trails — GIS Pilot</title>
+  <meta name="description" content="A small GIS case study showing why trail recollection and a separate public route structure may make sense for Mercer County Park.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap nav-wrap">
+      <a class="brand" href="#top">MC Park Trails <span>GIS pilot</span></a>
+      <nav aria-label="Page sections">
+        <a href="#problem">What we ran into</a>
+        <a href="#loop">The loop test</a>
+        <a href="#method">Field method</a>
+        <a href="#parks">What we need from Parks</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Mercer County Park • working concept</p>
+          <h1>What if the trail data stayed detailed internally, but the public saw simpler routes?</h1>
+          <p class="lede">
+            We are not trying to redesign the park from behind a computer. We took one tiny piece of the existing Red Trail,
+            messed with it as a proof of concept, and used it to figure out what a better collection / public-map workflow could look like.
+          </p>
+          <div class="chips" aria-label="Key ideas">
+            <span>Use the existing data</span>
+            <span>Verify with Trimble</span>
+            <span>Capture junctions</span>
+            <span>Let Parks name routes</span>
+          </div>
+        </div>
+
+        <aside class="hero-note">
+          <strong>The whole point:</strong>
+          <p>
+            The current data is useful. We are just asking it to do something new: support a public trail experience
+            where routes are easy to understand, while Parks still keeps the detail it needs behind the scenes.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="problem">
+      <div class="wrap">
+        <p class="eyebrow">What we ran into</p>
+        <h2>The lines are not really the problem. The route structure is.</h2>
+        <p class="section-intro">
+          A lot of the current features make sense as pieces of a physical trail network. The weird part shows up when we try to turn
+          those same pieces directly into the thing a visitor sees on a map.
+        </p>
+
+        <div class="stats" role="list" aria-label="Mercer County Park trail data quick scan">
+          <div class="stat" role="listitem"><b>232</b><span>MCP trail features</span></div>
+          <div class="stat" role="listitem"><b>91</b><span>unnamed features</span></div>
+          <div class="stat" role="listitem"><b>99</b><span>unnamed / connector-like features</span></div>
+          <div class="stat" role="listitem"><b>16</b><span>current named route labels</span></div>
+        </div>
+        <p class="micro">Quick scan of the current MCP dataset. Useful for understanding the structure, not meant as a final QA report.</p>
+
+        <div class="split">
+          <article class="card">
+            <h3>What the data is good at</h3>
+            <ul>
+              <li>Showing where trail centerlines already exist</li>
+              <li>Keeping detailed segments for Parks / GIS work</li>
+              <li>Holding condition, surface, status and other attributes</li>
+              <li>Giving us a really strong starting point instead of starting from zero</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <h3>Where it gets awkward for a public app</h3>
+            <ul>
+              <li>One named trail can run for a very long distance and through a lot of different situations</li>
+              <li>Short loops can be buried inside a much larger named route</li>
+              <li>Connectors and shared corridors make sense internally but are not great public-facing names</li>
+              <li>It is not always obvious from the attributes alone where one visitor route should begin or end</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="loop">
+      <div class="wrap">
+        <p class="eyebrow">The little experiment</p>
+        <h2>We pulled a small loop out of the existing Red Trail.</h2>
+        <p class="section-intro">
+          This is not a proposed official trail. It is just a case study showing how the same physical network could be organized
+          differently for the end user.
+        </p>
+
+        <div class="compare">
+          <article class="diagram-card">
+            <div class="label">Before</div>
+            <h3>Everything is “Red Trail”</h3>
+            <svg viewBox="0 0 680 330" role="img" aria-labelledby="before-title before-desc">
+              <title id="before-title">Existing Red Trail concept</title>
+              <desc id="before-desc">Two long trail segments continue beyond a small connecting segment, all labeled Red Trail.</desc>
+              <path class="network-line muted" d="M40 85 C175 72, 295 90, 430 82 S580 72, 640 82"/>
+              <path class="network-line muted" d="M40 250 C175 242, 310 255, 430 247 S565 238, 640 248"/>
+              <path class="network-line muted thin" d="M258 90 C275 130, 282 183, 276 247"/>
+              <circle class="node muted-node" cx="258" cy="90" r="8"/>
+              <circle class="node muted-node" cx="276" cy="247" r="8"/>
+              <text x="445" y="61">Red Trail keeps going →</text>
+              <text x="443" y="285">← Red Trail keeps going</text>
+              <text x="302" y="170">Red Trail</text>
+            </svg>
+            <p>
+              The smaller connection is there, but the public route identity is still tied to the much larger Red Trail.
+            </p>
+          </article>
+
+          <article class="diagram-card featured">
+            <div class="label proposed">Our test</div>
+            <h3>Use those same lines to define a smaller loop</h3>
+            <svg viewBox="0 0 680 330" role="img" aria-labelledby="after-title after-desc">
+              <title id="after-title">Proposed Loop A concept</title>
+              <desc id="after-desc">Junction points split portions of long existing lines to create a smaller closed loop while the original trails continue beyond it.</desc>
+              <path class="network-line background-line" d="M40 85 C175 72, 295 90, 430 82 S580 72, 640 82"/>
+              <path class="network-line background-line" d="M40 250 C175 242, 310 255, 430 247 S565 238, 640 248"/>
+              <path class="network-line green" d="M258 90 C310 86, 370 86, 430 82"/>
+              <path class="network-line green" d="M276 247 C330 250, 380 250, 430 247"/>
+              <path class="network-line green thin" d="M258 90 C275 130, 282 183, 276 247"/>
+              <circle class="node" cx="258" cy="90" r="9"/>
+              <circle class="node" cx="276" cy="247" r="9"/>
+              <circle class="node" cx="430" cy="82" r="9"/>
+              <circle class="node" cx="430" cy="247" r="9"/>
+              <text class="green-text" x="312" y="170">Proposed Loop A</text>
+              <text x="470" y="61">existing trail can continue</text>
+            </svg>
+            <p>
+              The physical network does not disappear. We just use logical junctions to assemble a cleaner public-facing route.
+            </p>
+          </article>
+        </div>
+
+        <div class="how">
+          <div class="how-step"><span>1</span><div><b>Start with the Parks data.</b><p>We used the existing Red Trail geometry. No blank-sheet redraw.</p></div></div>
+          <div class="how-step"><span>2</span><div><b>Find the connection points.</b><p>The short line connected into the middle of two longer Red Trail features.</p></div></div>
+          <div class="how-step"><span>3</span><div><b>Use those points as junctions.</b><p>We calculated the nearest point on the long trail lines and treated those as logical break points.</p></div></div>
+          <div class="how-step"><span>4</span><div><b>Keep only the pieces needed for the loop.</b><p>The rest of the Red Trail can keep going. The loop is just another way of organizing part of the same network.</p></div></div>
+          <div class="how-step"><span>5</span><div><b>Give it a fake name for the demo.</b><p>“Proposed Loop A” is intentionally boring. GIS is not trying to name Parks’ trails.</p></div></div>
+        </div>
+
+        <div class="note">
+          <strong>This is why the junction points matter.</strong>
+          Future field collection should tell us where the real network decisions happen instead of making us infer them later from line geometry.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="why-not-all">
+      <div class="wrap">
+        <p class="eyebrow">Why not just script the whole park?</p>
+        <h2>Because geometry can be automated. Trail meaning cannot.</h2>
+        <div class="split">
+          <article class="card">
+            <h3>Python can help us find…</h3>
+            <ul>
+              <li>gaps between lines</li>
+              <li>nearby endpoints</li>
+              <li>lines that hit the middle of other lines</li>
+              <li>possible loops and connected components</li>
+              <li>where the current geometry needs a closer look</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Python cannot tell us…</h3>
+            <ul>
+              <li>which route Parks considers official</li>
+              <li>whether a connector should be public</li>
+              <li>where visitors actually think a route starts and ends</li>
+              <li>whether a long trail should stay long or be broken into loops / shorter routes</li>
+              <li>what any new route should be called</li>
+            </ul>
+          </article>
+        </div>
+        <p class="big-idea">That is the reason for a small field pilot instead of a giant automated cleanup.</p>
+      </div>
+    </section>
+
+    <section class="section alt" id="method">
+      <div class="wrap">
+        <p class="eyebrow">How we think collection could work</p>
+        <h2>Use the Trimble to verify the physical network. Decide public routes after.</h2>
+
+        <div class="method-grid">
+          <article class="method-card">
+            <span class="method-num">01</span>
+            <h3>Bring the current data with us</h3>
+            <p>Existing trail lines stay in Field Maps as reference. We are not throwing them away.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-num">02</span>
+            <h3>Walk a representative area</h3>
+            <p>Use Trimble + Field Maps to see what actually exists on the ground and how the current lines line up with reality.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-num">03</span>
+            <h3>Collect the junctions</h3>
+            <p>Trailheads, intersections, forks, shared corridors, true endpoints, and places where a public route decision could happen.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-num">04</span>
+            <h3>Keep / repair / verify / recollect</h3>
+            <p>Some old geometry may be fine. Some may only need a small fix. Some areas may be easier to walk again.</p>
+          </article>
+        </div>
+
+        <div class="split top-gap">
+          <article class="card internal">
+            <p class="mini-label">Behind the scenes</p>
+            <h3>Parks / GIS physical network</h3>
+            <p>Detailed segments with stable IDs and operational attributes.</p>
+            <div class="tag-row">
+              <span>segment ID</span><span>surface</span><span>condition</span><span>status</span><span>accessibility</span><span>shared corridor</span><span>verified date</span>
+            </div>
+          </article>
+
+          <article class="card public">
+            <p class="mini-label">What a visitor sees</p>
+            <h3>Simple public routes</h3>
+            <p>Routes assembled from the physical network, with names and descriptions that make sense to people using the park.</p>
+            <div class="tag-row">
+              <span>trail name</span><span>loop / route type</span><span>mileage</span><span>difficulty</span><span>surface</span><span>status</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="parks">
+      <div class="wrap">
+        <p class="eyebrow">The part GIS should not decide alone</p>
+        <h2>We are going to need Parks to help define the actual routes and names.</h2>
+        <p class="section-intro">
+          The loop example is exactly why. A long “Red Trail” can make total sense in the current system, but a visitor might get more value
+          from a few clear loops or shorter routes that use pieces of that same trail.
+        </p>
+
+        <div class="quote-box">
+          <p>
+            GIS can say, “this looks like a logical loop.” Parks can tell us whether that is actually a route people use,
+            whether it should exist as a public trail, and what the hell we should call it.
+          </p>
+        </div>
+
+        <div class="question-grid">
+          <div><b>Which trail names are actually official?</b><span>And which are just how the current database happens to be labeled?</span></div>
+          <div><b>Are there loops people already use?</b><span>Even if they do not currently have their own GIS name?</span></div>
+          <div><b>What should stay internal?</b><span>Maintenance connectors, service access, unofficial trails, etc.</span></div>
+          <div><b>What would be useful to visitors?</b><span>Short loops, mileage, parking access, difficulty, surface, closures?</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section next">
+      <div class="wrap next-grid">
+        <div>
+          <p class="eyebrow">What we are actually proposing</p>
+          <h2>Do one small pilot together.</h2>
+          <p>
+            Pick a manageable area in Mercer County Park, walk it with Parks, compare the Trimble collection to the existing data,
+            agree on how junctions / connectors / shared corridors should work, and use that to set a repeatable standard.
+          </p>
+        </div>
+        <ol class="next-list">
+          <li>Pick the area</li>
+          <li>Walk it together</li>
+          <li>Verify the network</li>
+          <li>Talk through route names</li>
+          <li>Build the public version</li>
+          <li>Decide what scales to the rest of the park</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section screenshot-section">
+      <div class="wrap">
+        <p class="eyebrow">ArcGIS screenshots</p>
+        <h2>Drop the real before / after maps here.</h2>
+        <p class="section-intro">These three spots are intentionally placeholders so we can replace them with screenshots from the pilot.</p>
+        <div class="screens">
+          <figure>
+            <div class="screenshot-placeholder">1<br><span>Original Red Trail</span></div>
+            <figcaption>What the area looked like in the existing dataset.</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-placeholder">2<br><span>Junction points</span></div>
+            <figcaption>The connection points we used to isolate the smaller route.</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-placeholder">3<br><span>Proposed Loop A</span></div>
+            <figcaption>The conceptual visitor-facing loop over the original network.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>Mercer County GIS • trail data pilot</strong>
+      <span>Working idea for a conversation with Parks — not a final trail plan.</span>
+    </div>
+  </footer>
+</body>
+</html>
