@@ -1,0 +1,440 @@
+---
+title: "From Trail Segments to Visitor-Friendly Routes"
+subtitle: "A Mercer County Park GIS pilot for discussion with Parks"
+author: "Mercer County GIS"
+format:
+  revealjs:
+    incremental: false
+---
+
+## Why we tested this
+
+<div class="callout callout-green">
+
+We are **not proposing to redesign the entire trail system from a desk**.
+
+We used one small area of Mercer County Park as a case study to understand what the existing data can support, where it becomes ambiguous, and what a better field-collection workflow could look like.
+
+</div>
+
+The goal is to come to Parks with something concrete to react to — not to tell Parks what its trails should be called or how they should be managed.
+
+---
+
+## What we started with
+
+<div class="two-col">
+
+<div class="card">
+
+### Existing Parks data
+
+- Trail centerlines already exist
+- Individual features often represent pieces of a larger route
+- Many features carry broad names such as **Red Trail**
+- Some routes continue for long distances through multiple intersections
+- Connectors, shared corridors, and unnamed pieces are mixed into the same underlying network
+
+</div>
+
+<div class="card">
+
+### What GIS is trying to build
+
+- A clear public-facing trail map
+- Routes that make sense to someone standing in the park
+- Better support for maintenance, closures, inspections, and future field work
+- A structure that lets Parks keep detailed internal data **without exposing internal GIS complexity to the public**
+
+</div>
+
+</div>
+
+---
+
+## The case study
+
+<div class="callout">
+
+In one small area, three existing features were all part of the **Red Trail**. Two of those features continued well beyond the area, but portions of all three visually formed a smaller loop.
+
+</div>
+
+From a visitor perspective, that raised a simple question:
+
+<div class="big-question">
+
+Does one very long trail name need to be the only way this area is presented to the public?
+
+</div>
+
+<span class="small-note">“Proposed Loop A” is only a temporary GIS concept name used to test the idea.</span>
+
+---
+
+## What we actually did
+
+<div class="step">
+<div class="step-num">1</div>
+<div>
+<strong>Kept the existing geometry as our starting point.</strong><br>
+We did not redraw the trail from scratch.
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">2</div>
+<div>
+<strong>Identified where the short trail connected into the longer Red Trail.</strong><br>
+Those connection locations became conceptual junction points.
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">3</div>
+<div>
+<strong>Used those junction points to isolate only the relevant portions of the longer trail lines.</strong><br>
+The Red Trail could continue beyond the loop while the same physical corridor could also help define a smaller public route.
+</div>
+</div>
+
+<div class="step">
+<div class="step-num">4</div>
+<div>
+<strong>Combined those portions into a new conceptual public route.</strong><br>
+We called it <strong>Proposed Loop A</strong> only so we could see what the end-user experience might look like.
+</div>
+</div>
+
+---
+
+## Why the junction points mattered
+
+The existing features did not meet in a perfectly clean, purpose-built loop.
+
+The short line connected into the **middle of longer Red Trail features**, and the geometry was offset by a few feet in places.
+
+<div class="two-col">
+
+<div class="card">
+<span class="badge badge-current">Existing data</span>
+
+### Physical trail pieces
+
+The data told us where the trail lines were collected, but not necessarily where a visitor-facing route should begin or end.
+
+</div>
+
+<div class="card">
+<span class="badge badge-proposed">GIS pilot</span>
+
+### Junction points
+
+We used the connection locations as logical break points, then extracted only the portions needed for the conceptual loop.
+
+</div>
+
+</div>
+
+<div class="footer-note">This is a good example of why future collection should explicitly capture junctions/intersections rather than asking GIS to infer them later.</div>
+
+---
+
+## Existing structure vs. proposed public concept
+
+<div class="two-col">
+
+<div class="card">
+
+### Existing structure
+
+<span class="badge badge-current">Internal network</span>
+
+- Red Trail
+- Red Trail
+- Red Trail
+- Longer route continues beyond the local area
+- Segment boundaries reflect how the data was collected
+
+<div class="route-line gray"></div>
+
+<strong>Useful for:</strong> maintaining a physical network and retaining legacy information.
+
+</div>
+
+<div class="card">
+
+### Proposed public concept
+
+<span class="badge badge-proposed">Visitor-facing route</span>
+
+- **Proposed Loop A**
+- Shorter, understandable loop
+- Built from portions of the existing physical network
+- Existing Red Trail can still continue beyond it
+
+<div class="route-line green"></div>
+
+<strong>Useful for:</strong> public navigation, maps, trail descriptions, mileage, and route-level communication.
+
+</div>
+
+</div>
+
+---
+
+## What this does — and does not — prove
+
+<div class="three-col">
+
+<div class="card">
+
+### It does show
+
+The current geometry can sometimes be reorganized into clearer visitor-facing routes.
+
+</div>
+
+<div class="card">
+
+### It does not show
+
+That GIS can reliably reconstruct every trail in the park without field verification or Parks input.
+
+</div>
+
+<div class="card">
+
+### Most importantly
+
+It gives us a concrete example to discuss before committing to a larger recollection effort.
+
+</div>
+
+</div>
+
+---
+
+## Why we cannot automate this for every trail
+
+This worked because a person could look at a small area and make a reasonable interpretation of the physical network.
+
+Across the full park, GIS still cannot confidently infer:
+
+- which intersections are intentional;
+- where one public route should stop and another should begin;
+- whether a connector is a visitor route, maintenance access, shared corridor, or something else;
+- which long routes should remain long and which areas are better represented as loops or shorter routes;
+- which names are official, historical, temporary, or simply artifacts of the current database.
+
+<div class="callout">
+
+A script can help identify geometry and connection points. **It cannot make Parks-management or visitor-experience decisions for us.**
+
+</div>
+
+---
+
+## Proposed field-collection approach
+
+<div class="three-col">
+
+<div class="card">
+
+### 1. Use the current data
+
+Bring the existing trail network into Field Maps as a read-only reference.
+
+</div>
+
+<div class="card">
+
+### 2. Verify with Trimble
+
+Walk representative areas and collect/verify:
+
+- centerlines
+- junctions
+- intersections
+- true endpoints
+- shared corridors
+- questionable gaps
+
+</div>
+
+<div class="card">
+
+### 3. Update selectively
+
+Classify existing data as:
+
+- keep
+- repair
+- verify
+- recollect
+
+We do not need to automatically assume every mile must be recollected.
+
+</div>
+
+</div>
+
+---
+
+## How we think future trail data could work
+
+<div class="two-col">
+
+<div class="card">
+
+### Internal Parks / GIS network
+
+<span class="badge badge-current">Detailed</span>
+
+Physical trail segments with stable IDs.
+
+Possible fields:
+
+- Segment ID
+- surface
+- condition
+- accessibility
+- status
+- maintenance notes
+- field verification date
+- shared-corridor / connector role
+
+These pieces can remain detailed because Parks may need them operationally.
+
+</div>
+
+<div class="card">
+
+### Public trail routes
+
+<span class="badge badge-proposed">Simple</span>
+
+Routes assembled from the underlying physical segments.
+
+Possible fields:
+
+- public trail name
+- route type (loop / out-and-back / connector)
+- mileage
+- difficulty
+- surface
+- blaze/color
+- public status
+- visitor description
+
+The public does not need to see segment IDs or internal connector names.
+
+</div>
+
+</div>
+
+---
+
+## Naming needs Parks
+
+<div class="callout callout-green">
+
+GIS can identify geometry and propose a structure. **Parks should have the authority to decide official trail names and route identities.**
+
+</div>
+
+For the pilot, names like **Proposed Loop A** are intentionally generic.
+
+What we would want from Parks is help answering questions such as:
+
+- Does this smaller loop represent how visitors actually use the area?
+- Should it have its own name?
+- Should the larger Red Trail remain one public route, or should portions of it be presented differently?
+- Are there locally used names that are not represented in the GIS?
+- Which connectors should be visible to visitors, and which should remain internal?
+
+---
+
+## Why loops are worth discussing
+
+A long named trail can make sense from an internal management perspective while still being difficult for a visitor to interpret.
+
+A visitor may be looking for:
+
+- a 0.5-mile walk;
+- a 1-mile loop;
+- a route back to the same parking area;
+- a family-friendly option;
+- an easy way to understand where a trail starts and ends.
+
+<div class="big-question">
+
+The physical network does not have to change for the public route structure to become easier to understand.
+
+</div>
+
+---
+
+## What we are proposing to Parks
+
+<div class="callout">
+
+<strong>Use this case study as a starting point.</strong>
+
+We would like to work with Parks to test a better collection and route-organization method in a small area before deciding what should happen across the entire trail system.
+
+</div>
+
+A practical next step could be:
+
+1. Pick one representative area of Mercer County Park.
+2. Walk it with Parks using the Trimble / Field Maps.
+3. Compare what exists on the ground with the current GIS.
+4. Agree on how junctions, connectors, shared corridors, and route names should be handled.
+5. Use that pilot to establish a repeatable collection standard for the rest of the park.
+
+---
+
+## The point of the pilot
+
+<div class="big-question">
+
+We are not saying, “the old data is bad.”
+
+We are saying, “we are asking the data to do something new.”
+
+</div>
+
+The existing data gave us a strong starting point.
+
+The next step is figuring out, together, how to structure it so that it supports both **how Parks manages the trail system** and **how the public experiences it**.
+
+---
+
+## Discussion
+
+<div class="two-col">
+
+<div class="card">
+
+### Questions for Parks
+
+- How do you currently think about individual routes?
+- Which trail names are official?
+- Are there existing loops or commonly used route names not captured in GIS?
+- What information would be most useful for maintenance and field staff?
+
+</div>
+
+<div class="card">
+
+### Questions for GIS
+
+- Which geometry can be retained?
+- Where do we need Trimble verification?
+- How should internal segments relate to public routes?
+- What should the future Field Maps workflow capture?
+
+</div>
+
+</div>
