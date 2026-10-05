@@ -1,0 +1,130 @@
+:root {
+  --mc-navy: #16324f;
+  --mc-blue: #2f6f9f;
+  --mc-green: #4f7f64;
+  --mc-green-light: #dce9df;
+  --mc-gold: #c6a85a;
+  --mc-gray: #eef2f4;
+  --mc-dark: #1f2933;
+  --mc-muted: #5f6b73;
+}
+
+.reveal {
+  font-family: "Aptos", "Segoe UI", Arial, sans-serif;
+  color: var(--mc-dark);
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  color: var(--mc-navy);
+  font-weight: 700;
+}
+
+.reveal h1 { font-size: 2.2em; }
+.reveal h2 { font-size: 1.55em; margin-bottom: 0.5em; }
+.reveal p, .reveal li { line-height: 1.35; }
+
+.callout {
+  border-left: 8px solid var(--mc-blue);
+  background: #f7fafc;
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin: 14px 0;
+}
+
+.callout-green {
+  border-left-color: var(--mc-green);
+  background: #f4f8f5;
+}
+
+.small-note {
+  font-size: 0.72em;
+  color: var(--mc-muted);
+}
+
+.kicker {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--mc-blue);
+  font-weight: 700;
+  font-size: .72em;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.card {
+  background: white;
+  border: 1px solid #d8e0e5;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(22,50,79,.08);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: .68em;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.badge-current { background: var(--mc-green-light); color: #2b5941; }
+.badge-proposed { background: #e0edf6; color: #1f5278; }
+.badge-parks { background: #f4ecd4; color: #6f5924; }
+
+.route-line {
+  border-top: 8px solid var(--mc-blue);
+  border-radius: 6px;
+  margin: 18px 0;
+}
+
+.route-line.gray { border-color: #9ca8af; }
+.route-line.green { border-color: var(--mc-green); }
+
+.step {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 14px;
+  margin: 12px 0;
+  align-items: start;
+}
+
+.step-num {
+  background: var(--mc-navy);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.big-question {
+  font-size: 1.45em;
+  line-height: 1.2;
+  color: var(--mc-navy);
+  font-weight: 700;
+}
+
+.footer-note {
+  font-size: .62em;
+  color: var(--mc-muted);
+  margin-top: 18px;
+}
