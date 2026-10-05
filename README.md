@@ -1,50 +1,36 @@
 # Mercer County Park Trails — GIS Pilot
 
-This repository contains an editable Quarto/Reveal.js presentation for discussing a proposed trail-data collection and public-route methodology with Mercer County Parks.
+This repo is now a **plain static HTML page** instead of a slideshow.
 
-## Purpose
+The page is intentionally casual and meant to help GIS talk through the trail-data idea with Parks without making it sound like GIS is trying to redesign or rename the trail system on its own.
 
-The presentation uses a small Mercer County Park case study to show:
+## Files
 
-- how existing trail geometry can support a cleaner public-facing route structure;
-- why GIS can infer some route relationships but cannot reliably reconstruct every trail without Parks input and field verification;
-- how junction points and Trimble/Field Maps collection could improve the underlying network;
-- why detailed internal trail segments and simplified public routes should be treated as related but separate concepts;
-- why official route naming should remain a Parks decision.
+- `index.html` — the full page
+- `styles.css` — all styling
 
-The case-study route name **Proposed Loop A** is intentionally temporary and is not intended as an official trail name.
+Open `index.html` directly in a browser, or edit it in RStudio / VS Code / any text editor.
 
-## Open in RStudio / Posit
+## What the page covers
 
-Requirements:
+- what we ran into with the current trail structure;
+- the small Red Trail / “Proposed Loop A” case study;
+- how we used connection points / junctions to isolate the smaller loop;
+- why we cannot responsibly automate that interpretation across every trail;
+- a proposed Trimble + Field Maps verification workflow;
+- the idea of separating the detailed internal trail network from simple public-facing routes;
+- why official route structure and naming need to be worked out with Parks.
 
-1. Install Quarto: https://quarto.org/
-2. Clone this repository.
-3. Open the folder in RStudio.
-4. Open `index.qmd`.
-5. Click **Render** or run:
+## Screenshots
 
-```bash
-quarto preview
-```
+The bottom of the page has three placeholder slots for:
 
-The presentation will open in a browser.
+1. the original Red Trail view;
+2. the junction / connection-point view;
+3. Proposed Loop A over the original network.
 
-## Editing
+Once those screenshots are ready, the placeholders can be replaced with normal `<img>` tags.
 
-Most content is in:
+## Tone
 
-- `index.qmd` — slide text and layout
-- `styles.css` — visual styling
-- `_quarto.yml` — presentation settings
-
-Because the presentation is HTML/Reveal.js, all text and layout remain directly editable.
-
-## Suggested next addition
-
-Add two screenshots from ArcGIS Pro to the case-study section:
-
-1. **Before** — existing Red Trail geometry.
-2. **After** — Proposed Loop A highlighted over the existing network.
-
-A third screenshot showing the junction points would make the methodology especially clear.
+This is a working conversation piece, not a final trail plan. “Proposed Loop A” is just a concept name.
